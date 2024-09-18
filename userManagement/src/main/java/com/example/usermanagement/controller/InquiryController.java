@@ -10,10 +10,14 @@ import com.example.usermanagement.vi.PageRequest;
 import com.example.usermanagement.vo.DepartmentResponse;
 import com.example.usermanagement.vo.DoctorResponse;
 import com.example.usermanagement.vo.HospitalResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "创建问诊")
 @RestController
 @RequestMapping("/hospital")
 public class InquiryController {
@@ -26,7 +30,7 @@ public class InquiryController {
 
     @Autowired
     private DoctorService doctorService;
-
+    @ApiOperation(value = "医院列表查询", notes = "test")
     @PostMapping("/list")
     public Page<HospitalResponse> getHospitalList(@RequestBody PageRequest hospitalRequest) {
         Page<HospitalResponse> hospitalList = hospitalService.getHospitalList(hospitalRequest);
