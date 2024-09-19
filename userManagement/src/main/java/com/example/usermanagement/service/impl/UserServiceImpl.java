@@ -1,5 +1,6 @@
 package com.example.usermanagement.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.usermanagement.dto.RegisterRequest;
 import com.example.usermanagement.mapper.PermissionMapper;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Wrapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,10 +42,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
      */
     public void register(RegisterRequest registerRequest) throws Exception {
         // 检查用户名是否存在
-        if (this.lambdaQuery().eq(UserInfo::getUsername, registerRequest.getUsername()).one() != null) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username", registerRequest.getUsername());
+        if (userMapper.selectOne(wrapper) != null) {
             throw new Exception("Username already exists.");
         }
-
         // 创建用户实体
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(registerRequest.getUsername());
@@ -53,13 +56,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserInfo> implement
         userInfo.setPhoneNumber(registerRequest.getPhoneNumber());
         userInfo.setIsEnable(true);
         LocalDateTime dateTime = LocalDateTime.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//        String time = dateTime.format(formatter);
         userInfo.setCreatedAt(dateTime);
         userInfo.setUpdatedAt(dateTime);
 
         // 保存用户
-//        this.save(userInfo);
         userMapper.insert(userInfo);
     }
 
