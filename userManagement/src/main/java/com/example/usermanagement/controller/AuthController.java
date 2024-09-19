@@ -37,7 +37,6 @@ public class AuthController {
         userService.register(registerRequest);
         return "User registered successfully.";
     }
-
     /**
      * 用户登录
      */
@@ -56,7 +55,6 @@ public class AuthController {
             return ResponseEntity.status(401).body(new ApiResponse("Invalid username or password."));
         }
     }
-
     /**
      * 获取当前用户信息
      */
