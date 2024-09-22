@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/ws/**","/swagger-ui.html").permitAll()
                 .antMatchers("/hospital/**").permitAll()
                 .antMatchers("/patient/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll() // 允许注册和登录
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/doctor1/**").permitAll()// 允许注册和登录
                 .antMatchers("/api/admin/**").hasRole("ADMIN") // 仅管理员
                 .antMatchers("/api/doctors/**").hasRole("DOCTOR") // 仅医生
                 .antMatchers("/api/patients/**").hasRole("PATIENT") // 仅患者
