@@ -55,10 +55,10 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-//     访问地址   http://localhost:8085/swagger-ui.html
+//     访问地址   http://localhost:8080/swagger-ui.html
         return new ApiInfoBuilder()
                 .title("接口文档 1.0.0")
-                .description("哈哈网络科技有限公司")
+                .description("在线问诊开发技术组")
                 .version("1.0.0")
                 .build();
     }
