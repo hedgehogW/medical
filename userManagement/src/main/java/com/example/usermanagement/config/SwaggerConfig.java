@@ -58,7 +58,7 @@ public class SwaggerConfig {
 //     访问地址   http://localhost:8080/swagger-ui.html
         return new ApiInfoBuilder()
                 .title("接口文档 1.0.0")
-                .description("在线问诊开发技术组")
+                .description("在线问诊开发组")
                 .version("1.0.0")
                 .build();
     }

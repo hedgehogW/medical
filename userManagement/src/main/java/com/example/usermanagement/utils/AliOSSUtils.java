@@ -46,8 +46,9 @@ public class AliOSSUtils {
         ossClient.putObject(bucketName, fileName, inputStream);
 
         //文件访问路径
-        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + fileName;
-
+//        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + fileName;
+        String url = "https://"+bucketName+"."+ endpoint+"/"+fileName;
+        System.out.println(url);
         // 关闭ossClient
         ossClient.shutdown();
 

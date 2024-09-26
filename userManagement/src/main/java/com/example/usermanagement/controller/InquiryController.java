@@ -17,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "创建问诊")
+/**
+ * 发起问诊，选择医生
+ */
+@Api(tags = "获取医院信息")
 @RestController
 @RequestMapping("/hospital")
 public class InquiryController {
@@ -37,14 +40,14 @@ public class InquiryController {
 //        return ResponseEntity.ok(hospitalList);
         return hospitalList;
     }
-
+    @ApiOperation(value = "科室列表查询", notes = "test")
     @PostMapping("/{hospitalId}/departments")
     public Page<DepartmentResponse> getDepartmentList(@PathVariable Long hospitalId,
                                                                           @RequestBody PageRequest departmentRequest){
         Page<DepartmentResponse> departmentList = departmentService.getDepartmentByHospitalId(hospitalId, departmentRequest);
         return departmentList;
     }
-
+    @ApiOperation(value = "医生列表查询", notes = "test")
     @PostMapping("/{hospitalId}/departments/{departmentId}/doctor")
     public Page<DoctorResponse> getDoctorList(@PathVariable Long hospitalId,
                                                                   @PathVariable Long departmentId,
