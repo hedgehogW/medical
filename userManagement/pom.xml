@@ -59,6 +59,12 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
         </dependency>
+        <!-- 阿里云oss对象存储依赖-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.15.1</version>
+        </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
@@ -94,13 +100,16 @@
             <version>2.9.2</version>
         </dependency>
 
-
-
-
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
             <version>1.4.0</version>
+        </dependency>
+        <!-- apollo 依赖-->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.8.0</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

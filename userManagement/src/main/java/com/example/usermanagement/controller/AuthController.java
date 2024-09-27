@@ -4,6 +4,8 @@ import com.example.usermanagement.dto.*;
 import com.example.usermanagement.model.UserInfo;
 import com.example.usermanagement.service.impl.UserServiceImpl;
 import com.example.usermanagement.utils.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author wyz
  */
-
+@Api("用户管理和权限验证")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -32,6 +34,7 @@ public class AuthController {
     /**
      * 用户注册
      */
+    @ApiOperation(value = "用户注册")
     @PostMapping("/auth/register")
     public String registerUser(@RequestBody RegisterRequest registerRequest) throws Exception {
         userService.register(registerRequest);
@@ -40,6 +43,7 @@ public class AuthController {
     /**
      * 用户登录
      */
+    @ApiOperation(value = "用户登录")
     @PostMapping("/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         try {
@@ -58,6 +62,7 @@ public class AuthController {
     /**
      * 获取当前用户信息
      */
+    @ApiOperation(value = "获取用户个人信息")
     @GetMapping("/auth/me")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
