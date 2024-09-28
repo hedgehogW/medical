@@ -1,7 +1,6 @@
 package com.example.usermanagement.service.impl;
 
 import com.example.usermanagement.mapper.PreDiagnosisImagesMapper;
-import com.example.usermanagement.mapper.DoctorSeeDiagnosis;
 import com.example.usermanagement.mapper.PreDiagnosisMapper;
 import com.example.usermanagement.model.PreDiagnosis;
 import com.example.usermanagement.service.PreDiagnosisService;

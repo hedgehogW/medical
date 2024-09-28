@@ -1,20 +1,9 @@
 package com.example.usermanagement.controller;
 
-import com.example.usermanagement.model.PreDiagnosis;
-import com.example.usermanagement.service.DoctorSelectDiagnosis;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/doctor1")
+@RequestMapping("/doctor")
 public class DoctorController {
-    @Autowired
-    private DoctorSelectDiagnosis doctorSelectDiagnosis;
-    @GetMapping ("/diagnosis/{patinetId}")
-    public List<PreDiagnosis> getDiagnosis(@PathVariable Long patinetId){
-
-        List<PreDiagnosis> list = doctorSelectDiagnosis.selectPreDiagnosis(patinetId);
-    return list;
-    }
 }
