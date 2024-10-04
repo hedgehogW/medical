@@ -48,11 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/swagger-ui.html/**").permitAll()
-                .antMatchers("/swqgger-resources/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/css/**", "/js/**", "/img/**", "/index.html", "favicon.ico",
                 "/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/ws/**","/swagger-ui.html").permitAll()
                 .antMatchers("/hospital/**").permitAll()
                 .antMatchers("/patient/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll() // 允许注册和登录
                 .antMatchers("/api/admin/**").hasRole("ADMIN") // 仅管理员
                 .antMatchers("/api/doctors/**").hasRole("DOCTOR") // 仅医生
