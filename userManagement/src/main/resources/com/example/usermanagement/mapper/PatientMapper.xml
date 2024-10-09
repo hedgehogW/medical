@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.usermanagement.mapper.PatientMapper">
+  <resultMap id="BaseResultMap" type="com.example.usermanagement.model.Patient">
+    <id column="patient_id" jdbcType="BIGINT" property="patientId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="patient_age" jdbcType="INTEGER" property="patientAge" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="telephone_number" jdbcType="VARCHAR" property="telephoneNumber" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="home_address" jdbcType="VARCHAR" property="homeAddress" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="BIT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    patient_id, user_id, patient_name, patient_age, phone_number, telephone_number, email, 
+    home_address, create_time, update_time, state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from patient
+    where patient_id = #{patientId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from patient
+    where patient_id = #{patientId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.usermanagement.model.Patient">
+    insert into patient (patient_id, user_id, patient_name, 
+      patient_age, phone_number, telephone_number, 
+      email, home_address, create_time, 
+      update_time, state)
+    values (#{patientId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{patientName,jdbcType=VARCHAR}, 
+      #{patientAge,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR}, #{telephoneNumber,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{homeAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.usermanagement.model.Patient">
+    insert into patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="patientName != null">
+        patient_name,
+      </if>
+      <if test="patientAge != null">
+        patient_age,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="telephoneNumber != null">
+        telephone_number,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="homeAddress != null">
+        home_address,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="patientId != null">
+        #{patientId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="patientName != null">
+        #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        #{patientAge,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNumber != null">
+        #{telephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="homeAddress != null">
+        #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.usermanagement.model.Patient">
+    update patient
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="patientName != null">
+        patient_name = #{patientName,jdbcType=VARCHAR},
+      </if>
+      <if test="patientAge != null">
+        patient_age = #{patientAge,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNumber != null">
+        telephone_number = #{telephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="homeAddress != null">
+        home_address = #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where patient_id = #{patientId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.usermanagement.model.Patient">
+    update patient
+    set user_id = #{userId,jdbcType=BIGINT},
+      patient_name = #{patientName,jdbcType=VARCHAR},
+      patient_age = #{patientAge,jdbcType=INTEGER},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      telephone_number = #{telephoneNumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      home_address = #{homeAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=BIT}
+    where patient_id = #{patientId,jdbcType=BIGINT}
+  </update>
+</mapper>
