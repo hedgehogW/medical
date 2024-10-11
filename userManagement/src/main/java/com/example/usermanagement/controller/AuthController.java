@@ -1,12 +1,15 @@
 package com.example.usermanagement.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.usermanagement.adviser.BaseResponse;
 import com.example.usermanagement.dto.*;
 import com.example.usermanagement.model.UserInfo;
+import com.example.usermanagement.service.PatientService;
 import com.example.usermanagement.service.SessionService;
 import com.example.usermanagement.service.impl.UserServiceImpl;
 import com.example.usermanagement.utils.JwtTokenProvider;
+import com.example.usermanagement.vi.RegisterPatientVI;
 import com.example.usermanagement.vo.PatientInformationVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,9 +22,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author wyz
- * @date 2012/10/9
+ * @date 2024/10/11
  * @version 2.0.0
  * 集成session保存登陆状态，获取个人信息
  */
@@ -36,6 +42,9 @@ public class AuthController {
     
     @Autowired
     private UserServiceImpl userService;
+
+    @Autowired
+    private PatientService patientService;
     
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -43,14 +52,15 @@ public class AuthController {
     @Autowired
     private SessionService sessionService;
 
+
     /**
      * 用户注册
      */
-    @ApiOperation(value = "用户注册")
-    @PostMapping("/register")
-    public String registerUser(@RequestBody RegisterRequest registerRequest) throws Exception {
-        userService.register(registerRequest);
-        return "User registered successfully.";
+    @ApiOperation(value = "患者注册")
+    @PostMapping("/register/patient")
+    public String registerPatient(@RequestBody RegisterPatientVI registerPatientVI) throws Exception {
+        userService.registerPatient(registerPatientVI);
+        return "Patient registered successfully.";
     }
 
     /**
@@ -110,7 +120,11 @@ public class AuthController {
     @GetMapping("/patientUserInformation")
     public BaseResponse<PatientInformationVO> getPatientInformation() {
         PatientInformationVO patientInformationVO = new PatientInformationVO();
-        String userJson = sessionService.getDataFromSession("userInfo");
+
+        String user = sessionService.getDataFromSession("userinfo");
+        JSONObject userJson = JSON.parseObject(user);
+        Long userId =  (Long) userJson.get("id");
+        patientInformationVO = patientService.getPatientInformation(userId);
         return BaseResponse.success(patientInformationVO);
     }
     @RequestMapping("/doctor")

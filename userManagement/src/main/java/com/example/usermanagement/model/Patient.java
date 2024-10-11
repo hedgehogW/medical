@@ -1,5 +1,6 @@
 package com.example.usermanagement.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -22,6 +24,7 @@ import java.util.Date;
 @TableName("patient")
 public class Patient implements Serializable {
 
+    @TableId("patient_id")
     private Long patientId;
 
     private Long userId;
@@ -38,9 +41,9 @@ public class Patient implements Serializable {
 
     private String homeAddress;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Boolean state;
 

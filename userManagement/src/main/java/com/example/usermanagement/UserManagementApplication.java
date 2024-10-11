@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 
 @SpringBootApplication
-@EnableApolloConfig
+//@EnableApolloConfig
 @EnableCaching
 public class UserManagementApplication {
 

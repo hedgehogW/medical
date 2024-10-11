@@ -14,8 +14,6 @@ public class UserInfo {
     private Long id;
     private String username;
     private String password;
-    private String name;
-    private String phoneNumber;
     @TableField("is_enable")
     private Boolean isEnable;
     private LocalDateTime createdAt;
