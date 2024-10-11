@@ -45,7 +45,7 @@ public class Patient implements Serializable {
 
     private LocalDateTime updateTime;
 
-    private Boolean state;
+    private Boolean status;
 
     private static final long serialVersionUID = 1L;
 }

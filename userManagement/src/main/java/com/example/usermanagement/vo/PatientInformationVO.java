@@ -5,6 +5,13 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+
+/**
+ * @author wyz
+ * @date 2024/10/10
+ * @version 1.0.0
+ */
+
 @Data
 public class PatientInformationVO implements Serializable {
 

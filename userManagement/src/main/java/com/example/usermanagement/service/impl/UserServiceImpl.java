@@ -2,14 +2,10 @@ package com.example.usermanagement.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.usermanagement.dto.RegisterRequest;
-import com.example.usermanagement.mapper.PatientMapper;
-import com.example.usermanagement.mapper.PermissionMapper;
-import com.example.usermanagement.mapper.RoleMapper;
-import com.example.usermanagement.mapper.UserMapper;
-import com.example.usermanagement.model.Patient;
-import com.example.usermanagement.model.Permission;
-import com.example.usermanagement.model.UserInfo;
+import com.example.usermanagement.mapper.*;
+import com.example.usermanagement.model.*;
 import com.example.usermanagement.service.UserService;
+import com.example.usermanagement.vi.RegisterDoctorVI;
 import com.example.usermanagement.vi.RegisterPatientVI;
 import com.example.usermanagement.vi.RegisterVI;
 import org.springframework.beans.BeanUtils;
@@ -40,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PatientMapper patientMapper;
 
+    @Autowired
+    private DoctorMapper doctorMapper;
+
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
 
     public List<Permission> findPermissionsByRoleId(Long roleId) {
@@ -61,12 +62,13 @@ public class UserServiceImpl implements UserService {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(registerVI.getUsername());
         userInfo.setPassword(passwordEncoder.encode(registerVI.getPassword()));
+
         userInfo.setIsEnable(true);
         LocalDateTime dateTime = LocalDateTime.now();
         userInfo.setCreatedAt(dateTime);
         userInfo.setUpdatedAt(dateTime);
 
-        // 保存用户表
+        // 保存user表
         userMapper.insert(userInfo);
     }
 
@@ -74,29 +76,65 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void registerPatient(RegisterPatientVI registerPatientVI) throws Exception {
 
+        // 修改user表
         RegisterVI registerVI = new RegisterVI();
-        registerVI.setUsername(registerPatientVI.getUsername());
-        registerVI.setPassword(registerPatientVI.getPassword());
+        BeanUtils.copyProperties(registerPatientVI, registerVI);
         register(registerVI);
 
-        Patient patient = new Patient();
         UserInfo userInfo = findByUsername(registerPatientVI.getUsername());
+
+        // 修改user_role表
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userInfo.getId());
+        userRole.setRoleId(3L);
+        userRoleMapper.insert(userRole);
+
+        // 修改patient表
+        Patient patient = new Patient();
         patient.setUserId(userInfo.getId());
-//        patient.setPatientName(registerPatientVI.getPatientName());
-//        patient.setPatientAge(registerPatientVI.getPatientAge());
-//        patient.setEmail(registerPatientVI.getEmail());
-//        patient.setHomeAddress(registerPatientVI.getHomeAddress());
-//        patient.setPhoneNumber(registerPatientVI.getPhoneNumber());
-//        patient.setTelephoneNumber(registerPatientVI.getTelephoneNumber());
 
         LocalDateTime dateTime = LocalDateTime.now();
         patient.setCreateTime(dateTime);
         patient.setUpdateTime(dateTime);
-        patient.setState(true);
+        patient.setStatus(true);
 
-        //VO MODEL
+        // 复制patient到registerPatientVI
         BeanUtils.copyProperties(registerPatientVI, patient);
+
         patientMapper.insert(patient);
+    }
+
+
+    @Override
+    @Transactional
+    public void registerDoctor(RegisterDoctorVI registerDoctorVI) throws Exception {
+
+        // user表
+        RegisterVI registerVI = new RegisterVI();
+        BeanUtils.copyProperties(registerDoctorVI, registerVI);
+        register(registerVI);
+
+        UserInfo userInfo = findByUsername(registerDoctorVI.getUsername());
+
+        // 修改user_role表
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userInfo.getId());
+        userRole.setRoleId(2L);
+        userRoleMapper.insert(userRole);
+
+        // doctor 表
+        Doctor doctor = new Doctor();
+        doctor.setUserId(userInfo.getId());
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        doctor.setCreateTime(dateTime);
+        doctor.setUpdateTime(dateTime);
+        doctor.setStatus(true);
+
+        // 复制patient到registerPatientVI
+        BeanUtils.copyProperties(registerDoctorVI, doctor);
+
+        doctorMapper.insert(doctor);
     }
 
     /**

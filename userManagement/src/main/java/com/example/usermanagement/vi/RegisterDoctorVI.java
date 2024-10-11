@@ -1,6 +1,5 @@
 package com.example.usermanagement.vi;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,29 +7,42 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @date 2024/10/11
  * @author wyz
+ * @date 2024/10/12
+ * @version 1.0.0
  */
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class RegisterPatientVI implements Serializable {
+@AllArgsConstructor
+public class RegisterDoctorVI implements Serializable {
 
     private String username;
 
     private String password;
 
-    private String patientName;
+    private String doctorName;
 
-    private Integer patientAge;
+    private String hospitalName;
+
+    private String departmentName;
+
+    private Integer doctorAge;
+
+    private String doctorSex;
+
+    private String jobGrade;
+
+    private Long serviceTimes;
 
     private String phoneNumber;
 
     private String telephoneNumber;
 
-    private String email;
+    private String specialty;
 
-    private String homeAddress;
+    private String workEmail;
 
     public static final Long serialVersionUID = -123456L;
+
 }

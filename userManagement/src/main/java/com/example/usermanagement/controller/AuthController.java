@@ -5,11 +5,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.usermanagement.adviser.BaseResponse;
 import com.example.usermanagement.dto.*;
 import com.example.usermanagement.model.UserInfo;
+import com.example.usermanagement.service.AdminService;
+import com.example.usermanagement.service.DoctorService;
 import com.example.usermanagement.service.PatientService;
 import com.example.usermanagement.service.SessionService;
 import com.example.usermanagement.service.impl.UserServiceImpl;
 import com.example.usermanagement.utils.JwtTokenProvider;
+import com.example.usermanagement.vi.RegisterDoctorVI;
 import com.example.usermanagement.vi.RegisterPatientVI;
+import com.example.usermanagement.vo.AdminInformationVO;
+import com.example.usermanagement.vo.DoctorInformationVO;
 import com.example.usermanagement.vo.PatientInformationVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +50,12 @@ public class AuthController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
+    private AdminService adminService;
     
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -54,7 +65,7 @@ public class AuthController {
 
 
     /**
-     * 用户注册
+     * 患者注册
      */
     @ApiOperation(value = "患者注册")
     @PostMapping("/register/patient")
@@ -62,6 +73,17 @@ public class AuthController {
         userService.registerPatient(registerPatientVI);
         return "Patient registered successfully.";
     }
+
+    /**
+     * 医生注册
+     */
+    @ApiOperation(value = "医生注册")
+    @PostMapping("/register/doctor")
+    public String registerDoctor(@RequestBody RegisterDoctorVI registerDoctorVI) throws Exception {
+        userService.registerDoctor(registerDoctorVI);
+        return "Doctor registered succeccfully.";
+    }
+
 
     /**
      * 用户登录
@@ -90,34 +112,8 @@ public class AuthController {
         }
     }
 
-    /**
-     * 获取当前用户信息
-     */
-//    @ApiOperation(value = "获取用户个人信息")
-//    @GetMapping("/auth/me")
-//    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
-//        if (authentication == null || !authentication.isAuthenticated()) {
-//            return ResponseEntity.status(401).body(new ApiResponse("Unauthorized"));
-//        }
-//
-//        UserInfo user = userService.findByUsername(authentication.getName());
-//        if (user == null) {
-//            return ResponseEntity.status(404).body(new ApiResponse("User not found."));
-//        }
-//
-//        // 构建用户信息响应
-//        UserInfoResponse userInfo = new UserInfoResponse(
-//            user.getId(),
-//            user.getUsername(),
-//            user.getName(),
-//            user.getPhoneNumber()
-//        );
-//
-//        return ResponseEntity.ok(userInfo);
-//    }
-
     @ApiOperation(value = "获取患者个人信息")
-    @GetMapping("/patientUserInformation")
+    @GetMapping("/patient/userInformation")
     public BaseResponse<PatientInformationVO> getPatientInformation() {
         PatientInformationVO patientInformationVO = new PatientInformationVO();
 
@@ -127,7 +123,35 @@ public class AuthController {
         patientInformationVO = patientService.getPatientInformation(userId);
         return BaseResponse.success(patientInformationVO);
     }
-    @RequestMapping("/doctor")
+
+    @ApiOperation(value = "获取医生个人信息")
+    @GetMapping("/doctor/userInformation")
+    public BaseResponse<DoctorInformationVO> getDoctorInformation() {
+
+        DoctorInformationVO doctorInformationVO = new DoctorInformationVO();
+
+        String user = sessionService.getDataFromSession("userinfo");
+        JSONObject userJson = JSON.parseObject(user);
+        Long userId =  (Long) userJson.get("id");
+        doctorInformationVO = doctorService.getDoctorInformation(userId);
+
+        return BaseResponse.success(doctorInformationVO);
+    }
+
+    @ApiOperation(value = "获取管理员个人信息")
+    @GetMapping("/admin/userInformation")
+    public BaseResponse<AdminInformationVO> getAdminInformation() {
+
+        AdminInformationVO adminInformationVO = new AdminInformationVO();
+
+        String user = sessionService.getDataFromSession("userinfo");
+        JSONObject userJson = JSON.parseObject(user);
+        Long userId =  (Long) userJson.get("id");
+        adminInformationVO = adminService.getAdminInformation(userId);
+
+        return BaseResponse.success(adminInformationVO);
+    }
+
     public String doctor(){
         return "doctor";
     }

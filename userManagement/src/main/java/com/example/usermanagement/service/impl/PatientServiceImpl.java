@@ -5,6 +5,7 @@ import com.example.usermanagement.mapper.PatientMapper;
 import com.example.usermanagement.model.Patient;
 import com.example.usermanagement.service.PatientService;
 import com.example.usermanagement.vo.PatientInformationVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,7 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = patientMapper.selectOne(queryWrapper);
 
         PatientInformationVO patientInformationVO = new PatientInformationVO();
-        patientInformationVO.setPatientId(patient.getPatientId());
-        patientInformationVO.setPatientAge(patient.getPatientAge());
-        patientInformationVO.setPatientName(patient.getPatientName());
-        patientInformationVO.setPhoneNumber(patient.getPhoneNumber());
-        patientInformationVO.setEmail(patient.getEmail());
-        patientInformationVO.setHomeAddress(patient.getHomeAddress());
-        patientInformationVO.setTelephoneNumber(patient.getTelephoneNumber());
+        BeanUtils.copyProperties(patient, patientInformationVO);
 
         return patientInformationVO;
     }

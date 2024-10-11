@@ -8,48 +8,43 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * @author wyz
+ * @date 2024/10/12
+ * @version 1.0.0
+ */
+
 @Data
-@TableName("doctor")
-@ApiModel("医生实体类")
+@TableName("admin")
+@ApiModel("管理员实体类")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Doctor implements Serializable {
+public class Admin implements Serializable {
 
-    @TableId("doctor_id")
-    private Long doctorId;
+    @TableId("admin_id")
+    private Long adminId;
 
     private Long userId;
 
-    private String doctorName;
+    private String adminName;
 
-    private Long hospitalId;
+    private Integer adminAge;
 
-    private Long departmentId;
+    private String adminSex;
 
-    private Integer doctorAge;
-
-    private String doctorSex;
-
-    private String jobGrade;
-
-    private Long serviceTimes;
+    private String workEmail;
 
     private String phoneNumber;
 
     private String telephoneNumber;
 
-    private String specialty;
-
-    private String workEmail;
-
     private Boolean status;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     private static final long serialVersionUID = 1L;
 }
