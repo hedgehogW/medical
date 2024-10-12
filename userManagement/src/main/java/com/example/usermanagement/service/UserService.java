@@ -19,4 +19,5 @@ public interface UserService {
 
     public void registerDoctor(RegisterDoctorVI registerDoctorVI) throws Exception;
 
+//    public void registerAdmin(RegisterVI registerVI) throws Exception;
 }

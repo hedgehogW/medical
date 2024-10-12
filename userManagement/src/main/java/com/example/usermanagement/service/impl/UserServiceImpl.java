@@ -40,7 +40,13 @@ public class UserServiceImpl implements UserService {
     private DoctorMapper doctorMapper;
 
     @Autowired
+    private HospitalMapper hospitalMapper;
+
+    @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
 
 
     public List<Permission> findPermissionsByRoleId(Long roleId) {
@@ -131,11 +137,35 @@ public class UserServiceImpl implements UserService {
         doctor.setUpdateTime(dateTime);
         doctor.setStatus(true);
 
-        // 复制patient到registerPatientVI
+        // 复制doctor到registerPatientVI
         BeanUtils.copyProperties(registerDoctorVI, doctor);
+        QueryWrapper wrapper2 = new QueryWrapper<>();
+        wrapper2.eq("hospital_name", registerDoctorVI.getHospitalName());
+        Hospital hospital = hospitalMapper.selectOne(wrapper2);
+        doctor.setHospitalId(hospital.getHospitalId());
+
+        QueryWrapper wrapper3 = new QueryWrapper<>();
+        wrapper3.eq("department_name", registerDoctorVI.getDepartmentName());
+        Department department = departmentMapper.selectOne(wrapper3);
+        doctor.setDepartmentId(department.getDepartmentId());
 
         doctorMapper.insert(doctor);
     }
+
+//    @Override
+//    @Transactional
+//    public void createAdmin(RegisterVI registerVI) throws Exception {
+//
+//        register(registerVI);
+//
+//        UserInfo userInfo = findByUsername(registerVI.getUsername());
+//
+//        // 修改user_role表
+//        UserRole userRole = new UserRole();
+//        userRole.setUserId(userInfo.getId());
+//        userRole.setRoleId(1L);
+//        userRoleMapper.insert(userRole);
+//    }
 
     /**
      * 根据用户名查找用户
@@ -151,4 +181,5 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long userId) {
         // 仅有管理员才能删除用户
     }
+
 }

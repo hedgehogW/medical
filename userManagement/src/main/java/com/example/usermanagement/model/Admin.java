@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,6 +29,8 @@ public class Admin implements Serializable {
 
     private Long userId;
 
+    private Boolean superAdmin;
+
     private String adminName;
 
     private Integer adminAge;
@@ -42,9 +45,9 @@ public class Admin implements Serializable {
 
     private Boolean status;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 }

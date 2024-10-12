@@ -1,5 +1,6 @@
 package com.example.usermanagement.service;
 
+import com.example.usermanagement.vi.AdminCreateVI;
 import com.example.usermanagement.vo.AdminInformationVO;
 
 /**
@@ -11,4 +12,6 @@ import com.example.usermanagement.vo.AdminInformationVO;
 public interface AdminService {
 
     public AdminInformationVO getAdminInformation(Long id);
+
+    public void createNormalAdmin(Long id, AdminCreateVI adminCreateVI) throws Exception;
 }

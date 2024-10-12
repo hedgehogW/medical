@@ -11,8 +11,10 @@ import com.example.usermanagement.service.PatientService;
 import com.example.usermanagement.service.SessionService;
 import com.example.usermanagement.service.impl.UserServiceImpl;
 import com.example.usermanagement.utils.JwtTokenProvider;
+import com.example.usermanagement.vi.AdminCreateVI;
 import com.example.usermanagement.vi.RegisterDoctorVI;
 import com.example.usermanagement.vi.RegisterPatientVI;
+import com.example.usermanagement.vi.RegisterVI;
 import com.example.usermanagement.vo.AdminInformationVO;
 import com.example.usermanagement.vo.DoctorInformationVO;
 import com.example.usermanagement.vo.PatientInformationVO;
@@ -84,6 +86,23 @@ public class AuthController {
         return "Doctor registered succeccfully.";
     }
 
+//    @PostMapping("/register/admin")
+//    public String registerAdmin(@RequestBody RegisterVI registerVI) throws Exception {
+//        userService.registerAdmin(registerVI);
+//        return "Admin registered successfully.";
+//    }
+
+    @ApiOperation(value = "创建管理员账户")
+    @PostMapping("/create/admin")
+    public BaseResponse<String> createAdmin(@RequestBody AdminCreateVI adminCreateVI) throws Exception {
+
+        String user = sessionService.getDataFromSession("userinfo");
+        JSONObject userJson = JSON.parseObject(user);
+        Long userId =  (Long) userJson.get("id");
+
+        adminService.createNormalAdmin(userId, adminCreateVI);
+        return BaseResponse.success("create admin user successfully.")
+    }
 
     /**
      * 用户登录

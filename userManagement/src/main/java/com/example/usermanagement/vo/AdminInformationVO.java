@@ -19,6 +19,8 @@ public class AdminInformationVO implements Serializable {
 
     private String adminName;
 
+    private String superAdminString;
+
     private Integer adminAge;
 
     private String adminSex;
