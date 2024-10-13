@@ -20,9 +20,7 @@ public class DoctorController {
     @ApiOperation(value = "医生对应病历查询",tags = "test")
     @PostMapping("/preDiagnosis/{patientId}")
     List<PreDiagnosisResponse> getPatientPreDiagnosis(@PathVariable Long patientId){
-        System.out.println("111111");
         List<PreDiagnosisResponse> list =preDiagnosisService.selectPreDiagnosis(1L,patientId);
-        System.out.println("4444444");
         return list;
     }
 }

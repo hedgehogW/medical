@@ -3,7 +3,9 @@ package com.example.usermanagement.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.usermanagement.adviser.BaseResponse;
-import com.example.usermanagement.dto.*;
+import com.example.usermanagement.dto.ApiResponse;
+import com.example.usermanagement.dto.LoginRequest;
+import com.example.usermanagement.dto.LoginResponse;
 import com.example.usermanagement.model.UserInfo;
 import com.example.usermanagement.service.AdminService;
 import com.example.usermanagement.service.DoctorService;
@@ -14,13 +16,11 @@ import com.example.usermanagement.utils.JwtTokenProvider;
 import com.example.usermanagement.vi.AdminCreateVI;
 import com.example.usermanagement.vi.RegisterDoctorVI;
 import com.example.usermanagement.vi.RegisterPatientVI;
-import com.example.usermanagement.vi.RegisterVI;
 import com.example.usermanagement.vo.AdminInformationVO;
 import com.example.usermanagement.vo.DoctorInformationVO;
 import com.example.usermanagement.vo.PatientInformationVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +28,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author wyz
@@ -101,7 +98,7 @@ public class AuthController {
         Long userId =  (Long) userJson.get("id");
 
         adminService.createNormalAdmin(userId, adminCreateVI);
-        return BaseResponse.success("create admin user successfully.")
+        return BaseResponse.success("create admin user successfully.");
     }
 
     /**
