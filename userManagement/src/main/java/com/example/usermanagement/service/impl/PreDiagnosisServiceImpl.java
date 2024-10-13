@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -51,5 +53,35 @@ public class PreDiagnosisServiceImpl implements PreDiagnosisService {
         response.setSubmitTime(preDiagnosis.getSubmitTime());
 
         return response;
+    }
+    @Override
+    public List<PreDiagnosisResponse> selectPreDiagnosis(Long doctorId, Long patientId) {
+        System.out.println("22222");
+        //存放一个病人的所有预诊病历
+        List<PreDiagnosisResponse> responses = new ArrayList<>();
+        System.out.println("33333");
+        PreDiagnosisResponse response = new PreDiagnosisResponse();
+        List<PreDiagnosis> preDiagnoses = preDiagnosisMapper.findAllByDoctorIdAndPatientId(doctorId,patientId);
+        System.out.println("55555");
+        for (PreDiagnosis preDiagnosis:
+                preDiagnoses) {
+            //存放一个病人预诊病历的所有图片
+            List<PreDiagnosisImages> images = preDiagnosisImagesMapper.findAllByPreDiagnosisId(preDiagnosis.getId());
+            List<String> list = new ArrayList<>();
+            System.out.println("44444");
+            response.setPreDiagnosisId(preDiagnosis.getId());
+            response.setPatientId(preDiagnosis.getPatientId());
+            response.setDoctorId(preDiagnosis.getDoctorId());
+            response.setRichText(preDiagnosis.getRichText());
+            for (PreDiagnosisImages image:
+                    images) {
+                list.add(image.getImageUrl());
+            }
+            response.setImageUrls(list);
+            response.setSubmitTime(preDiagnosis.getSubmitTime());
+            responses.add(response);
+        }
+        System.out.println("3333");
+        return responses;
     }
 }
