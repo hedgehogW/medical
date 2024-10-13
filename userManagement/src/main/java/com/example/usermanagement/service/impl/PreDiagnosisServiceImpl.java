@@ -6,7 +6,9 @@ import com.example.usermanagement.model.PreDiagnosis;
 import com.example.usermanagement.model.PreDiagnosisImages;
 import com.example.usermanagement.service.PreDiagnosisService;
 import com.example.usermanagement.vi.PreDiagnosisRequest;
+import com.example.usermanagement.vi.SubmitIn;
 import com.example.usermanagement.vo.PreDiagnosisResponse;
+import com.example.usermanagement.vo.SubmitOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,4 +54,8 @@ public class PreDiagnosisServiceImpl implements PreDiagnosisService {
 
         return response;
     }
+
+
+
+
 }

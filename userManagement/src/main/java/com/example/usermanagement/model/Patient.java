@@ -24,10 +24,10 @@ import java.util.Date;
 @TableName("patient")
 public class Patient implements Serializable {
 
-    @TableId("patient_id")
-    private Long patientId;
+    @TableId("id")
+    private Long id;
 
-    private Long userId;
+    private Long patientId;
 
     private String patientName;
 

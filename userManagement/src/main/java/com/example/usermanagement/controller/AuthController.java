@@ -101,7 +101,7 @@ public class AuthController {
         Long userId =  (Long) userJson.get("id");
 
         adminService.createNormalAdmin(userId, adminCreateVI);
-        return BaseResponse.success("create admin user successfully.")
+        return BaseResponse.success("create admin user successfully.");
     }
 
     /**

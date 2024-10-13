@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
         // 修改patient表
         Patient patient = new Patient();
-        patient.setUserId(userInfo.getId());
+        patient.setPatientId(userInfo.getId());
 
         LocalDateTime dateTime = LocalDateTime.now();
         patient.setCreateTime(dateTime);

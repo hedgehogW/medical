@@ -18,7 +18,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientInformationVO getPatientInformation(Long id) {
 
         QueryWrapper<Patient> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", id);
+        queryWrapper.eq("patient_id", id);
         Patient patient = patientMapper.selectOne(queryWrapper);
 
         PatientInformationVO patientInformationVO = new PatientInformationVO();
