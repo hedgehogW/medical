@@ -1,5 +1,6 @@
 package com.example.usermanagement.controller;
 
+import com.example.usermanagement.service.PatientService;
 import com.example.usermanagement.service.PreDiagnosisService;
 import com.example.usermanagement.vo.PreDiagnosisResponse;
 import io.swagger.annotations.Api;
@@ -16,6 +17,15 @@ public class DoctorController {
 
     @Autowired
     private PreDiagnosisService preDiagnosisService;
+
+    @Autowired
+    private PatientService patientService;
+
+    @ApiOperation(value = "查询医生名下的病人")
+    @PostMapping("/{doctorId}")
+    List<String> getPatientName(@PathVariable Long doctorId){
+        return patientService.getPatientName(doctorId);
+    }
 
     @ApiOperation(value = "医生对应病历查询",tags = "test")
     @PostMapping("/preDiagnosis/{patientId}")
