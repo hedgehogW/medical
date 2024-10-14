@@ -25,6 +25,6 @@ public class SubmitIn implements Serializable {
     @NotBlank
     private String description;
 
-    private String imageUrl;
+//    private String imageUrl;
 
 }

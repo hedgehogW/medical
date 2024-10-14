@@ -6,10 +6,13 @@ import com.example.usermanagement.service.PreDiagnosisService;
 import com.example.usermanagement.utils.AliOSSUtils;
 import com.example.usermanagement.vi.PreDiagnosisRequest;
 import com.example.usermanagement.vi.SubmitIn;
+import com.example.usermanagement.vo.OcrOut;
 import com.example.usermanagement.vo.PreDiagnosisResponse;
 import com.example.usermanagement.vo.SubmitOut;
+import com.example.usermanagement.vo.UploadImageOut;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +21,14 @@ import java.io.IOException;
 
 /**
  * 在线问诊功能
+ * @author wyz
+ * @date 2024/10/14
+ * @version 1.0.0
  */
 @Api(tags = "在线问诊")
 @RestController
 @RequestMapping("/patient")
-public class PreDiagnosisController {
+public class DiagnosisController {
 
     @Autowired
     PreDiagnosisService preDiagnosisService;
@@ -30,29 +36,6 @@ public class PreDiagnosisController {
     @Autowired
     private DiagnosisService diagnosisService;
 
-    /**
-     * 患者提交预诊
-     * @param patientId
-     * @param preDiagnosisRequest
-     * @return
-     */
-    @ApiOperation(value = "患者提交预诊")
-    @PostMapping("/{patientId}/pre-diagnosis")
-    public PreDiagnosisResponse submitPreDiagnosis(@PathVariable Long patientId, @RequestBody PreDiagnosisRequest preDiagnosisRequest) {
-        PreDiagnosisResponse response;
-        response = preDiagnosisService.submitPreDiagnosis(patientId, preDiagnosisRequest);
-        return response;
-    }
-
-    @Autowired
-    private AliOSSUtils aliOSSUtils;
-
-    @PostMapping("/upload")
-    public String upload(MultipartFile file) throws IOException {
-            //调用阿里云OSS工具类进行文件上传
-            String url = aliOSSUtils.upload(file);
-            return url;
-    }
 
     @PostMapping("/submit")
     @ApiOperation("上传病例")
@@ -63,5 +46,24 @@ public class PreDiagnosisController {
         return baseResponse;
     }
 
+    @PostMapping("/uploadimage")
+    @ApiOperation("上传图片")
+    public BaseResponse<UploadImageOut> uploadResponse(@RequestBody MultipartFile file) {
+
+        BaseResponse<UploadImageOut> baseResponse = new BaseResponse<UploadImageOut>();
+        UploadImageOut uploadImageOut = diagnosisService.uploadResponse(file);
+        baseResponse.setData(uploadImageOut);
+        return baseResponse;
+    }
+
+    @PostMapping("/ocr")
+    @ApiOperation("ocr图像文字识别")
+    public BaseResponse<OcrOut> OcrResponse(@RequestBody MultipartFile file) throws TesseractException, IOException {
+
+        BaseResponse<OcrOut> baseResponse = new BaseResponse<OcrOut>();
+        OcrOut ocrOut = diagnosisService.OcrResponse(file);
+        baseResponse.setData(ocrOut);
+        return baseResponse;
+    }
 
 }
