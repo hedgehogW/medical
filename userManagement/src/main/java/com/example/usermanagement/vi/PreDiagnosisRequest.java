@@ -9,7 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PreDiagnosisRequest {
+public class PreDiagnosisRequest{
+    private Long id;
     private Long patientId; // 患者ID
     private Long doctorId;  // 医生ID
     private String richText;  // 病情描述（富文本）

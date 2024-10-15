@@ -11,4 +11,6 @@ public interface PreDiagnosisService {
     public PreDiagnosisResponse submitPreDiagnosis(Long patientId, PreDiagnosisRequest preDiagnosisRequest);
 
     public List<PreDiagnosisResponse> selectPreDiagnosis(Long doctorId,Long patientId);
+
+    public PreDiagnosisResponse updatePreDiagnosis(PreDiagnosisRequest preDiagnosisRequest);
 }

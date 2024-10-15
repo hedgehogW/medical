@@ -11,8 +11,9 @@ import java.util.List;
 @Mapper
 public interface PreDiagnosisMapper extends BaseMapper<PreDiagnosis> {
     @Select("SELECT * FROM pre_diagnosis WHERE doctor_id = #{doctorId} AND patient_id = #{patientId}")
-    List<PreDiagnosis> findAllByDoctorIdAndPatientId(@Param("doctorId") Long doctorId, @Param("patientId") Long patientId);
+    public List<PreDiagnosis> findAllByDoctorIdAndPatientId(@Param("doctorId") Long doctorId, @Param("patientId") Long patientId);
 
     @Select("SELECT patient_id FROM pre_diagnosis WHERE doctor_id = #{doctorId}")
-    List<Long> findPatientIdByDoctorId(@Param("doctorId")Long doctorId);
+    public List<Long> findPatientIdByDoctorId(@Param("doctorId")Long doctorId);
+
 }

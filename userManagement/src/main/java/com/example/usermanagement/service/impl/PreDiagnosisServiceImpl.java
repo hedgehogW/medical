@@ -7,6 +7,7 @@ import com.example.usermanagement.model.PreDiagnosisImages;
 import com.example.usermanagement.service.PreDiagnosisService;
 import com.example.usermanagement.vi.PreDiagnosisRequest;
 import com.example.usermanagement.vo.PreDiagnosisResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +79,18 @@ public class PreDiagnosisServiceImpl implements PreDiagnosisService {
             responses.add(response);
         }
         return responses;
+    }
+
+    @Override
+    public PreDiagnosisResponse updatePreDiagnosis(PreDiagnosisRequest preDiagnosisRequest){
+        PreDiagnosis preDiagnosis =new PreDiagnosis();
+        BeanUtils.copyProperties(preDiagnosisRequest,preDiagnosis);
+        preDiagnosisMapper.updateById(preDiagnosis);
+//        PreDiagnosisImages preDiagnosisImages = new PreDiagnosisImages();
+        PreDiagnosisResponse preDiagnosisResponse = new PreDiagnosisResponse();
+        BeanUtils.copyProperties(preDiagnosisMapper.selectById(preDiagnosis.getId()),preDiagnosisResponse);
+        preDiagnosisResponse.setImageUrls(preDiagnosisRequest.getImageUrls());
+        preDiagnosisResponse.setPreDiagnosisId(preDiagnosis.getId());
+        return preDiagnosisResponse;
     }
 }
